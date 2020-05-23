@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from './utils/dialog'
+import Dialog from './utils/dialog/'
 function App() {
   let clickDemo1 = ()=>{
     Dialog('你刚刚点击了')
