@@ -49,7 +49,7 @@ class DialogCom extends React.Component {
             <>
                 {
                     ui ? ui(this) : 
-                    <div className={`c_alert_wrap ${ (title || buttonArr.length) ? 'c_alert_width' : ''}`}>
+                    <div className={`c_alert_wrap ${ (title || buttonArr.length) ? 'c_alert_width' : ''}`} style={{zIndex : this.state.zIndex ? +this.state.zIndex+1 : ''}}>
                         {title ? <div className="c_alert_title">{title}</div> : ''}
                         <div className="c_alert_con">
                             {content}
@@ -71,6 +71,7 @@ class DialogCom extends React.Component {
                 {
                     mask ? <div 
                     className="c_alert_mask" 
+                    style={{zIndex : this.state.zIndex}}
                     onClick = {()=>{
                         maskClick && this.close(this.state.index,this,this.state.onClose,this.state.root)
                     }}
