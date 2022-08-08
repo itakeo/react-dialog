@@ -1,8 +1,7 @@
 import React from 'react';
-import {render,unmountComponentAtNode} from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './dialog.css'
 let __dialog_index_num = 0;
-
 class DialogCom extends React.Component {
     state = {
         content : '',
@@ -34,16 +33,15 @@ class DialogCom extends React.Component {
             this.state.onLoad(this);
             if(this.state.time){
                 setTimeout(()=>{
-                    this.close();
+                    this.close(this.state.index,this,this.state.onClose,this.state.root);
                 },this.state.time)
             }
         });
     }
 
 
-    close = ()=>{
-        removeDialogElement(this.state.index,this,this.state.onClose);
-        
+    close = (a = this.state.index,b = this,c=this.state.onClose,d=this.state.root)=>{
+        removeDialogElement(a,b,c,d);
     }
     render(){
         let {content,mask,title,buttonArr,ui,maskClick} = this.state
@@ -74,7 +72,7 @@ class DialogCom extends React.Component {
                     mask ? <div 
                     className="c_alert_mask" 
                     onClick = {()=>{
-                        maskClick && this.close()
+                        maskClick && this.close(this.state.index,this,this.state.onClose,this.state.root)
                     }}
                     onTouchMove={()=>{return false}}></div> : ''
                 }
@@ -84,16 +82,16 @@ class DialogCom extends React.Component {
     
 }
 
-function removeDialogElement(a,b,fn){
+function removeDialogElement(a,b,fn,root){
     let _target = document.querySelectorAll('.c_alert_dialog');
     _target.forEach(o=>{
         if(o.dataset.index*1 === a){
             o.classList.remove('dialog_open')
             o.classList.add('dialog_close');
             o.addEventListener('animationend', function(){
-                unmountComponentAtNode(o)
+                root && root.unmount(o)
                 o.remove();
-                fn(b)
+                fn && fn(b)
             });
         } 
     });
@@ -119,13 +117,17 @@ function createDialogElement(a,b){
         _dialogElement.classList.add('c_alert_inner');
     }
     _props.addClass && _dialogElement.classList.add(_props.addClass);
+    _dialogElement.style.zIndex = _props.zIndex;
     let _index = _props.index ? _props.index : __dialog_index_num;
     _dialogElement.dataset.index = _index;
     document.body.appendChild(_dialogElement);
-    render( <DialogCom content={_content} time={_time} index={_index} {..._props} />,_dialogElement)
+    let root = ReactDOM.createRoot(_dialogElement);
+    root.render( <DialogCom content={_content} time={_time} root={root} index={_index} {..._props} />);
+    return {close : (fn)=>{
+        return removeDialogElement(_index,'',fn ? fn : _props.onClose,root)
+    }}
 }
 
-
 export default function Dialog(a,b){
-    createDialogElement(a,b)
+   return createDialogElement(a,b)
 }
