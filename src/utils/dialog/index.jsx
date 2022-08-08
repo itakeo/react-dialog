@@ -10,6 +10,7 @@ class DialogCom extends React.Component {
         mask : true,
         title : '',
         index : 1,
+        zIndex : null,
         button : {},
         buttonArr : [],
         ui :null,
