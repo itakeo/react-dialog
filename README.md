@@ -1,6 +1,8 @@
 # react-dialog
 
 ```
+import Dialog from './utils/dialog/';  
+
 let demo = Dialog('这里是内容'); //默认一个参数提示内容
 demo.close(()=>{
   //默认有个返回值，可以在其他地方关闭这个Dialog
