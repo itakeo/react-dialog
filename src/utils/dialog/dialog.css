@@ -48,7 +48,8 @@
     color: #444;
     z-index: 1200;
     max-width: 400px;
-    position: relative;
+    position: fixed;
+    top:12%;
     background: #fff;
     height: auto;
     border-radius: 10px;
