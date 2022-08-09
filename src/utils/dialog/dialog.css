@@ -23,6 +23,7 @@
     color: #fff;
     position: fixed;
     bottom: 100px;
+    top: auto;
 }
 
 .c_alert_mask {
