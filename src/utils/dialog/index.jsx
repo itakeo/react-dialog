@@ -59,9 +59,9 @@ class DialogCom extends React.Component {
                             buttonArr.length ? (
                                 <div className="c_alert_btn">
                                 {
-                                    buttonArr.map((res,index)=> <span key={index} onClick={()=>{
+                                    buttonArr.map((res,index)=> <div className="c_alert_btn_cel" key={index} onClick={()=>{
                                         res.fn(this)
-                                    }}>{res.title}</span>)
+                                    }}>{res.title}</div>)
                                 }
                                 </div>
                             )
