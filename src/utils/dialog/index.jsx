@@ -62,7 +62,7 @@ class DialogCom extends React.Component {
         return (
             <>
                 {
-                    ui ? ui(this) : 
+                    ui && this.props.visible=== undefined ? ui(this) : 
                     <div className={`c_alert_wrap ${ (title || buttonArr.length) ? 'c_alert_width' : ''}`} style={{zIndex : this.state.zIndex ? +this.state.zIndex+1 : ''}}>
                         {title ? <div className="c_alert_title">{title}</div> : ''}
                         <div className="c_alert_con">
@@ -161,7 +161,7 @@ class StatementDialog extends React.Component {
                 this.props.onLoad && this.props.onLoad()
             };
         };
-        return <div ref={this.target} className={"c_alert_dialog  " + (this.props.addClass)+ (this.props.visible ? ' dialog_open ' :' ') + (!(this.props.ui || this.props.title || this.props.button) ? 'c_alert_inner' : '')}>
+        return <div ref={this.target} className={"c_alert_dialog  " + (this.props.addClass || '')+ (this.props.visible ? ' dialog_open ' :' ') + (!(this.props.ui || this.props.title || this.props.button) ? 'c_alert_inner' : '')}>
             <DialogCom {...this.props} />
         </div>
     }
